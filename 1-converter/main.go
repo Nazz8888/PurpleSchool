@@ -21,4 +21,5 @@ func calc(x int, y string, z string) int {
 	result := 3
 	return result
 	// немного изменил
+	//еще немного изменил для коммита2
 }
