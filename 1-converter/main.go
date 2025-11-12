@@ -6,42 +6,13 @@ import (
 	"strings"
 )
 
+const usd2rub = 81.29
+const eur2usd = 1.16
+const eur2rub = 94.19
+
 func main() {
-	const usd2rub = 81.29
-	const eur2usd = 1.16
-	const eur2rub = 94.19
 
-	inputVal1, inputVal2, inputVal3 := getUserInput()
-	inputVal4 := float64(inputVal2)
-	var result float64
-
-	switch inputVal1 {
-	case "rub":
-		switch inputVal3 {
-		case "eur":
-			result = inputVal4 / eur2rub
-		case "usd":
-			result = inputVal4 / usd2rub
-		}
-
-	case "eur":
-		switch inputVal3 {
-		case "rub":
-			result = inputVal4 * eur2rub
-		case "usd":
-			result = inputVal4 / eur2usd
-		}
-
-	case "usd":
-		switch inputVal3 {
-		case "rub":
-			result = inputVal4 * usd2rub
-		case "eur":
-			result = inputVal4 * eur2usd
-		}
-
-	}
-
+	result := work()
 	fmt.Println("результат", result)
 }
 
@@ -117,4 +88,38 @@ func valCheckInt(x int) (int, error) {
 	} else {
 		return x, nil
 	}
+}
+
+func work() float64 {
+	inputVal1, inputVal2, inputVal3 := getUserInput()
+	inputVal4 := float64(inputVal2)
+	var result float64
+
+	switch inputVal1 {
+	case "rub":
+		switch inputVal3 {
+		case "eur":
+			result = inputVal4 / eur2rub
+		case "usd":
+			result = inputVal4 / usd2rub
+		}
+
+	case "eur":
+		switch inputVal3 {
+		case "rub":
+			result = inputVal4 * eur2rub
+		case "usd":
+			result = inputVal4 / eur2usd
+		}
+
+	case "usd":
+		switch inputVal3 {
+		case "rub":
+			result = inputVal4 * usd2rub
+		case "eur":
+			result = inputVal4 * eur2usd
+		}
+
+	}
+	return result
 }
