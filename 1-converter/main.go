@@ -37,7 +37,7 @@ func main() {
 		case "rub":
 			result = inputVal4 * usd2rub
 		case "eur":
-			result = inputVal4 / eur2usd
+			result = inputVal4 * eur2usd
 		}
 
 	}
