@@ -8,6 +8,7 @@ func main() {
 	res := calc(someValue1, fromCurrency, toCurrency)
 
 	fmt.Printf("Какой-то результат: %d", res)
+	fmt.Println("Очередной тест")
 }
 func getUserInput() int {
 	var inputVal1 int
