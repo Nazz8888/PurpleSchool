@@ -9,6 +9,14 @@ func main() {
 
 	fmt.Printf("Какой-то результат: %d", res)
 	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
+	fmt.Println("Очередной тест")
 }
 func getUserInput() int {
 	var inputVal1 int
