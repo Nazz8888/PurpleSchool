@@ -1,6 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"sort"
+	"strconv"
+	"strings"
+)
 
 func main() {
 
@@ -11,28 +18,42 @@ func main() {
 }
 
 func getUserInput() (string, []int) {
-	var operation string
-	var number []int
-	var num int
 
+	var operation string
 	fmt.Println("Введите операцию (AVG/SUM/MED)")
 	fmt.Scan(&operation)
 
-	for {
-		fmt.Println("Введите число")
-		fmt.Scan(&num)
+	fmt.Println("Введите числа через запятую (например: 1,2,3,4,5):")
 
-		if num == 0 {
-			break
-		}
-		number = append(number, num)
+	scanner := bufio.NewScanner(os.Stdin)
+	if !scanner.Scan() {
+		fmt.Println("Нет ввода")
 
 	}
-	return operation, number
+
+	input := scanner.Text()
+	input = strings.TrimSpace(input)
+
+	inputSplit := strings.Split(input, ",")
+
+	var inputInt []int
+
+	for _, x := range inputSplit {
+		y, err := strconv.Atoi(x)
+		if err != nil {
+			fmt.Println(err)
+		}
+		inputInt = append(inputInt, y)
+	}
+
+	return operation, inputInt
 }
 
 func work(operation string, number []int) float64 {
 	var res float64
+
+	sort.Ints(number)
+
 	switch operation {
 	case "AVG":
 		var sum float64
@@ -53,6 +74,7 @@ func work(operation string, number []int) float64 {
 
 	case "MED":
 		var med float64
+
 		if len(number)%2 != 0 {
 			med = float64(number[len(number)/2])
 		}
