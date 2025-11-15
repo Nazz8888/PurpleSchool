@@ -88,25 +88,17 @@ func valCheckInt(x int) (int, error) {
 
 func work() float64 {
 
-	convertRub := map[string]float64{"usd": 0.0123266, "eur": 0.010515}
-	convertEur := map[string]float64{"usd": 1.16, "rub": 95.1}
-	convertUsd := map[string]float64{"usd": 0.8602, "rub": 81.13}
-
 	inputVal1, inputVal2, inputVal3 := getUserInput()
 	inputVal4 := float64(inputVal2)
 	var result float64
 
-	switch inputVal1 {
-	case "rub":
+	convertRub := map[string]float64{"usd": 0.0123266, "eur": 0.010515}
+	convertEur := map[string]float64{"usd": 1.16, "rub": 95.1}
+	convertUsd := map[string]float64{"usd": 0.8602, "rub": 81.13}
 
-		result = inputVal4 * convertRub[inputVal3]
+	convertFrom := map[string]map[string]float64{"rub": convertRub, "eur": convertEur, "usd": convertUsd}
 
-	case "eur":
-		result = inputVal4 * convertEur[inputVal3]
+	result = convertFrom[inputVal1][inputVal3] * inputVal4
 
-	case "usd":
-		result = inputVal4 * convertUsd[inputVal3]
-
-	}
 	return result
 }
