@@ -8,8 +8,8 @@ import (
 
 func main() {
 
-	result := work()
-	fmt.Println("результат", result)
+	res := work()
+	fmt.Println("результат", *res)
 }
 
 func getUserInput() (string, int, string) {
@@ -86,7 +86,7 @@ func valCheckInt(x int) (int, error) {
 	}
 }
 
-func work() float64 {
+func work() *float64 {
 
 	inputVal1, inputVal2, inputVal3 := getUserInput()
 	inputVal4 := float64(inputVal2)
@@ -97,8 +97,7 @@ func work() float64 {
 	convertUsd := map[string]float64{"usd": 0.8602, "rub": 81.13}
 
 	convertFrom := map[string]map[string]float64{"rub": convertRub, "eur": convertEur, "usd": convertUsd}
-
 	result = convertFrom[inputVal1][inputVal3] * inputVal4
 
-	return result
+	return &result
 }
