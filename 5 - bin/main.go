@@ -11,7 +11,7 @@ type bin struct {
 	name      string
 	id        string
 	createdAt time.Time
-	private   string
+	private   bool
 }
 
 func (acc *bin) generateId(n int) {
@@ -27,7 +27,7 @@ func (acc *bin) generateId(n int) {
 
 	acc.id = string(res)
 }
-func newBin(name, id, private string) (*bin, error) {
+func newBin(name, id string, private bool) (*bin, error) {
 	if name == "" {
 		return nil, errors.New("invalid name")
 	}
@@ -45,17 +45,23 @@ func newBin(name, id, private string) (*bin, error) {
 	return newBin, nil
 }
 
-func promptData(prompt string) string {
+func promptDataString(prompt string) string {
 	fmt.Print(prompt + ": ")
 	var res string
 	fmt.Scanln(&res)
 	return res
 }
+func promptDataBool(prompt string) bool {
+	fmt.Print(prompt)
+	var res bool
+	fmt.Scanln(&res)
+	return res
+}
 
 func main() {
-	name := promptData("Введите имя: ")
-	private := promptData("Введите приват: ")
-	id := promptData("Введите id: ")
+	name := promptDataString("Введите имя: ")
+	private := promptDataBool("Бин приватный? ")
+	id := promptDataString("Введите id: ")
 
 	bin1, err := newBin(name, id, private)
 	if err != nil {
@@ -63,7 +69,8 @@ func main() {
 		return
 	}
 
-	//BinList := make(map[string]bin)
+	BinList := make(map[string]bin)
 	fmt.Println(bin1)
+	fmt.Println(BinList)
 
 }
