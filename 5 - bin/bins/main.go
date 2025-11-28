@@ -27,7 +27,7 @@ func (acc *Bin) generateId(n int) {
 		res[i] = validChars[rand.IntN(len(validChars))]
 	}
 
-	acc.id = string(res)
+	acc.Id = string(res)
 }
 func newBin(name, id string, private bool) (*Bin, error) {
 	if name == "" {
