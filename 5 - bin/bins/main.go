@@ -5,16 +5,18 @@ import (
 	"fmt"
 	"math/rand/v2"
 	"time"
+
+	"main.go/storage"
 )
 
-type bin struct {
-	name      string
-	id        string
-	createdAt time.Time
-	private   bool
+type Bin struct {
+	Name      string
+	Id        string
+	CreatedAt time.Time
+	Private   bool
 }
 
-func (acc *bin) generateId(n int) {
+func (acc *Bin) generateId(n int) {
 	var validChars []rune
 
 	for r := '0'; r <= '9'; r++ {
@@ -27,16 +29,16 @@ func (acc *bin) generateId(n int) {
 
 	acc.id = string(res)
 }
-func newBin(name, id string, private bool) (*bin, error) {
+func newBin(name, id string, private bool) (*Bin, error) {
 	if name == "" {
 		return nil, errors.New("invalid name")
 	}
 
-	newBin := &bin{
-		name:      name,
-		id:        id,
-		createdAt: time.Now(),
-		private:   private,
+	newBin := &Bin{
+		Name:      name,
+		Id:        id,
+		CreatedAt: time.Now(),
+		Private:   private,
 	}
 	if id == "" {
 		newBin.generateId(12)
@@ -69,8 +71,11 @@ func main() {
 		return
 	}
 
-	BinList := make(map[string]bin)
-	fmt.Println(bin1)
-	fmt.Println(BinList)
+	storage.SaveBin(bin1, "bins.json")
 
+	bin2, err := storage.LoadBin("bins.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(bin2)
 }
