@@ -5,15 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"time"
 )
-
-type Bin struct {
-	Name      string
-	Id        string
-	CreatedAt time.Time
-	Private   bool
-}
 
 func SaveBin(bin *Bin, name string) (bool, error) {
 	data, err := json.MarshalIndent(bin, "", "  ")
