@@ -1,11 +1,10 @@
 package main
 
 import (
-	"encoding/json"
-	"errors"
+	"5-bin/files"
+	"5-bin/storage"
 	"fmt"
 	"math/rand/v2"
-	"os"
 	"time"
 )
 
@@ -14,10 +13,6 @@ type Bin struct {
 	Id        string
 	CreatedAt time.Time
 	Private   bool
-}
-type WorkBin interface {
-	SaveBin(name string) (bool, error)
-	LoadBin(filePath string) error
 }
 
 type Create interface {
@@ -37,38 +32,6 @@ func (acc *Bin) generateId(n int) {
 		res[i] = validChars[rand.IntN(len(validChars))]
 	}
 	acc.Id = string(res)
-}
-
-func (bin *Bin) SaveBin(name string) (bool, error) {
-	data, err := json.MarshalIndent(bin, "", "  ")
-	if err != nil {
-		return false, err
-	}
-	file, err := os.Create(name)
-	if err != nil {
-		fmt.Println(err)
-		return false, err
-	}
-	defer file.Close()
-	_, err = file.Write(data)
-	if err != nil {
-		return false, err
-	}
-	return true, nil
-}
-
-func (bin *Bin) LoadBin(filePath string) error {
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		return errors.New("could not read the files")
-	}
-	var result Bin
-	err = json.Unmarshal(data, &result)
-	if err != nil {
-		return errors.New("could not parse the files")
-	}
-	return nil
-
 }
 
 //устраняем дичь с коммитами
@@ -105,36 +68,17 @@ func promptDataBool(prompt string) bool {
 
 func main() {
 
-	name := &Bin{}
-	name.Name = promptDataString("Введите имя: ")
-	name.Private = promptDataBool("Бин приватный? ")
-	name.generateId(12)
-	name.CreatedAt = time.Now()
+	bin := &Bin{}
+	bin.Name = promptDataString("Введите имя: ")
+	bin.Private = promptDataBool("Бин приватный? ")
+	bin.generateId(12)
+	bin.CreatedAt = time.Now()
 
-	name.SaveBin("bins.json")
+	var storage WorkBin = bin
+	processBin(storage)
 
-	//
-	//	storage.WorkBin.SaveBin("bins.json")
-	//fmt.Println(name)
-
-	//name := promptDataString("Введите имя: ")
-	//private := promptDataBool("Бин приватный? ")
-	//id := promptDataString("Введите id: ")
-	//
-	//var bin1 Bin
-	//bin1, err = newBin(name, id, private)
-	//if err != nil {
-	//	fmt.Println("неверный формат ввода")
-	//	return
-	//}
-	//
-	//storage.WorkBin.SaveBin(bin1, bin1.Name)
-
-	//storage.SaveBin(bin1, "bins.json")
-	//
-	//bin2, err := storage.LoadBin("bins.json")
-	//if err != nil {
-	//	fmt.Println(err)
-	//}
-	//fmt.Println(bin2)
+}
+func processBin(storage WorkBin) {
+	storage.SaveBin("bins.json")
+	storage.LoadBin("bins.json")
 }
